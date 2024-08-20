@@ -1,31 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.texto}>
-        FATEC JALES!
-      </Text>
-      <Text>
-        ANÁLISE E DESENVOLVIMENTO DE SISTEMAS
-      </Text>
-      <StatusBar style="auto" />
+    <View style={{backgroundColor: '#DA70D6'}}>
+       <Image style={styles.imagem} source={require('../appprojeto/assets/logo.png')}
+        />
+        <TouchableOpacity style={styles.button} onPress={''}>
+          <Text style={{fontSize: 20}}>Aperte Aqui!</Text>
+        </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#20B2AA',
-    alignItems: 'center',
+  imagem:{
+    width: 400,
+    height: 400,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-
-  texto: {
-    fontSize: 30,
-    color: '#FFFAFA', 
-    fontStyle: 'italic',
+  button:{
+    alignItems:'center',
+    backgroundColor: '#FFFFFF',
+    padding: 10,
   }
 });
