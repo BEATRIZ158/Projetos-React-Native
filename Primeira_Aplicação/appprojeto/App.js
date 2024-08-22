@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native';
 
+const Separator = () => <View style={styles.separator} />;
+
 export default function App() {
   return (
     <View style={{backgroundColor: '#DA70D6'}}>
-       <Image style={styles.imagem} source={require('../appprojeto/assets/logo.png')}
-        />
+       <Image style={styles.imagem} source={require('../appprojeto/assets/logo.png')}/>
+       <Separator/>
         <TouchableOpacity style={styles.button} onPress={''}>
           <Text style={{fontSize: 20}}>Aperte Aqui!</Text>
         </TouchableOpacity>
@@ -24,5 +26,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: '#FFFFFF',
     padding: 10,
+  },
+  separator:{
+    marginVertical: 20,
   }
 });
