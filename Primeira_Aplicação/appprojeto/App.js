@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Image, TouchableOpacity} from 'react-native';
+import Login from './src/screens/login';
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -9,7 +9,7 @@ export default function App() {
        <Image style={styles.imagem} source={require('../appprojeto/assets/logo.png')}/>
        <Separator/>
         <TouchableOpacity style={styles.button} onPress={''}>
-          <Text style={{fontSize: 20}}>Aperte Aqui!</Text>
+          <Text style={{fontSize: 20}}>Acessar Tela de Login!</Text>
         </TouchableOpacity>
     </View>
   );
