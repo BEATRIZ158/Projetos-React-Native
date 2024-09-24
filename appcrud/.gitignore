@@ -33,3 +33,9 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Conexão com o Banco
+src/services/connectionFirebase.js
+
+# Gitignore
+**/connectionFirebase

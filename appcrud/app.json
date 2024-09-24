@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "appprojeto",
-    "slug": "appprojeto",
+    "name": "appcrud",
+    "slug": "appcrud",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

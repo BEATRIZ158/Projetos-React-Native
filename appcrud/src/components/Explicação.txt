@@ -1,0 +1,15 @@
+-- Login.js --
+
+O código utiliza alguns componentes da biblioteca react-native-paper para estilização
+e funcionalidade.
+
+Os import são as importações.
+
+-- Função Login:
+
+export default function Login(): Define o componente Login, que é a estrutura principal
+da tela de Login.
+
+<view>: Contêiner principal que envolve todos os elementos.
+
+<Image>: Exibe a imagem de uma caminho relativo à pasta assets.
