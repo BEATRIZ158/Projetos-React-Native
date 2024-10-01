@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { Card, TextInput } from 'react-native-paper'; 
 import firebase from '../services/connectionFirebase';
 
-export default function Login() {
+export default function Login({changeStatus}) {
   const [type, setType] = useState('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
