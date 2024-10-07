@@ -1,60 +1,109 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 
 // Componente Header (default export)
 const Principal = () => {
+    const handleCardPress = (text) => {
+        Alert.alert('Card clicado!', `Você clicou no card: ${text}`);
+    };
+    let iconName;
     return (
         <View style={styles.container}>
-            {/* View da Header */}
             <View style={styles.header}>
-                <IconButton/>
-                <Text style={[styles.title, {top: 14, left: 50}]}>Eternal Grace</Text>
+                <IconButton iconName="list" iconSize={30} iconColor="#000" position={{ top: 3, left: -195}} 
+                />
+                <Text style={[styles.title, {top: 15, left: 55}]}>Eternal Grace</Text>
+                <IconButton iconName="user-circle" iconSize={40} iconColor='#000' position={{ top: -40, left: 100}}/>
+            </View>
+            {/* Layout com Botões em Posições Diferentes */}
+            <View style={styles.buttonContainer}>
+                <Text style={[styles.title, {top: 30, left: -115}]}>Main Categories:</Text>
+                <CardButton 
+                    imageSource={require('../../assets/images/Jesus_Cristo.jpg')} 
+                    buttonText="Jesus Cristo" 
+                    onPress={() => handleCardPress("Jesus Cristo")} 
+                    style={[styles.card, {top: 70, left: -90}]} // Estilo personalizado para este card
+                />
+                <CardButton
+                    imageSource={require('../../assets/images/Herois.jpg')} 
+                    buttonText="Heróis Da Fé" 
+                    onPress={() => handleCardPress("Heróis Da Fé")} 
+                    style={[styles.card, {top: -105, left: 85}]} // Estilo personalizado para este card
+                />
+                <CardButton
+                    imageSource={require('../../assets/images/Apostolos.webp')} 
+                    buttonText="Os Milagres" 
+                    onPress={() => handleCardPress("Os Milagres")} 
+                    style={[styles.card, {top: -105, left: -90}]} // Estilo personalizado para este card
+                />
+                <CardButton
+                    imageSource={require('../../assets/images/Milagres.jpg')} 
+                    buttonText="Os 12 Apostolos" 
+                    onPress={() => handleCardPress("Os 12 Apostolos")} 
+                    style={[styles.card, {top: -280, left: 87}]} // Estilo personalizado para este card
+                />
+                <CardButton
+                    imageSource={require('../../assets/images/Mandamentos.jpg')} 
+                    buttonText="10 Mandamentos" 
+                    onPress={() => handleCardPress("Os 10 Mandamentos")} 
+                    style={[styles.card, {top: -280, left: -87}]} // Estilo personalizado para este card
+                />
+                <CardButton
+                    imageSource={require('../../assets/images/Apocalipse.png')} 
+                    buttonText="Apocalipse" 
+                    onPress={() => handleCardPress("Apocalipse")} 
+                    style={[styles.card, {top: -454, left: 87}]} // Estilo personalizado para este card
+                />
+                {/* Adicione mais CardButtons conforme necessário */}
             </View>
         </View>
     );
 };
 
 // Componente IconButton
-const IconButton = () => {
-    // Função chamada ao clicar no botão
+
+const IconButton = ({
+    iconName,
+    iconSize = 30,
+    iconColor = "#000",
+    onPressMessage = 'Ícone clicado!',
+    position = { top: 1, left: -200 } // Posição padrão
+}) => {
     const handlePress = () => {
-        Alert.alert('Ícone clicado!', 'Você clicou no ícone do menu.');
+        Alert.alert(onPressMessage, 'Você clicou no ícone do menu.');
     };
 
     return (
-        <View style={[styles.container, {backgroundColor: '#FFFFFF'}]}>
-            {/* Ícone dentro de um botão */}
-            <TouchableOpacity onPress={handlePress} style={[styles.iconButton, {top: 1, left: -200,}]}>
-                <Icon name="list" size={30} color="#000" />
+        <View style={[styles.container, { backgroundColor: '#FFFFFF' }]}>
+            <TouchableOpacity onPress={handlePress} style={[styles.iconButton, position]}>
+                <Icon name={iconName} size={iconSize} color={iconColor} />
             </TouchableOpacity>
         </View>
     );
-}
+};
 
-const CardButton = ({ imageSource, buttonText, onPress }) => {
-  return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      {/* Imagem do Card */}
-      <Image source={imageSource} style={styles.image} />
-      
-      {/* Texto do Card */}
-      <Text style={styles.text}>Jesus Cristo</Text>
-    </TouchableOpacity>
-  );
+// Componente CardButton
+const CardButton = ({ imageSource, buttonText, onPress, style }) => {
+    return (
+        <TouchableOpacity style={[styles.card, style]} onPress={onPress}>
+            <Image source={imageSource} style={styles.image} />
+            <Text style={styles.text}>{buttonText}</Text>
+        </TouchableOpacity>
+    );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, // Faz o container ocupar todo o espaço disponível
-        justifyContent: 'flex-start', // Centraliza o conteúdo verticalmente
-        alignItems: 'center', // Centraliza o conteúdo horizontalmente
-        backgroundColor: '#E6D853', // Cor de fundo para visualizar melhor
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#E6D853',
     },
     header: {
-        height: 80,  // Ajustado para caber os novos componentes
+        height: 80,
         width: 400,
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
@@ -68,42 +117,34 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     card: {
-        backgroundColor: '#fff', // Cor de fundo do card
-        borderRadius: 10, // Bordas arredondadas
-        elevation: 5, // Sombra para Android
-        shadowColor: '#000', // Sombra para iOS
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        elevation: 5,
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
         padding: 10,
-        alignItems: 'center', // Centraliza o conteúdo
-        marginVertical: 10, // Espaçamento vertical entre os cards
+        alignItems: 'center',
+        marginVertical: 10,
+        width: 145,
+        height: 155,
     },
     image: {
-        width: 100, // Largura da imagem
-        height: 100, // Altura da imagem
-        borderRadius: 10, // Bordas arredondadas para a imagem
-      },
-    serchBox: {
-        height: 40,
-        width: '80%',
-        borderColor: '#FFFFF0',
-        borderWidth: 1,
-        paddingLeft: 20,
-        marginTop: 10,
-        backgroundColor: '#FFFFF0',
+        width: 115,
+        height: 110,
+        borderRadius: 10,
     },
-    buttonText: {
-        color: '#000000',
+    text: {
         fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
+        color: '#000',
+        marginTop: 5, // Adiciona um pequeno espaço acima do texto
     },
     iconButton: {
         position: 'absolute',
         height: 30,
-        padding: 20,  // Área clicável ao redor do ícone
-        backgroundColor: '#FFFFFF',  // Fundo (opcional)
+        padding: 20,
+        backgroundColor: '#FFFFFF',
     },
 });
 
