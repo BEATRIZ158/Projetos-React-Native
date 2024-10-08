@@ -81,7 +81,7 @@ export default function Menu() {
         })}
         tabBarOptions={{
           activeTintColor: '#4682B4',
-          inactiveTintColor: '#777',
+          inactiveTintColor: '#000',
           showLabel: true,
         }}
       >

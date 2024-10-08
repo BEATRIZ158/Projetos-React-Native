@@ -20,51 +20,49 @@ const Principal = () => {
             </View>
             {/* Layout com Botões em Posições Diferentes */}
             <View style={styles.buttonContainer}>
-                <Text style={[styles.title, {top: 30, left: -115}]}>Main Categories:</Text>
+                <Text style={[styles.title, {top: 30, left: -115, color: '#FFFFFF'}]}>Main Categories:</Text>
                 <CardButton 
                     imageSource={require('../../assets/images/Jesus_Cristo.jpg')} 
                     buttonText="Jesus Cristo" 
                     onPress={() => handleCardPress("Jesus Cristo")} 
-                    style={[styles.card, {top: 70, left: -90}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: 70, left: -90}]}
                 />
                 <CardButton
                     imageSource={require('../../assets/images/Herois.jpg')} 
                     buttonText="Heróis Da Fé" 
                     onPress={() => handleCardPress("Heróis Da Fé")} 
-                    style={[styles.card, {top: -105, left: 85}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: -105, left: 85}]}
                 />
                 <CardButton
                     imageSource={require('../../assets/images/Apostolos.webp')} 
                     buttonText="Os Milagres" 
                     onPress={() => handleCardPress("Os Milagres")} 
-                    style={[styles.card, {top: -105, left: -90}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: -105, left: -90}]}
                 />
                 <CardButton
                     imageSource={require('../../assets/images/Milagres.jpg')} 
                     buttonText="Os 12 Apostolos" 
                     onPress={() => handleCardPress("Os 12 Apostolos")} 
-                    style={[styles.card, {top: -280, left: 87}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: -280, left: 87}]}
                 />
                 <CardButton
                     imageSource={require('../../assets/images/Mandamentos.jpg')} 
                     buttonText="10 Mandamentos" 
                     onPress={() => handleCardPress("Os 10 Mandamentos")} 
-                    style={[styles.card, {top: -280, left: -87}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: -280, left: -87}]}
                 />
                 <CardButton
                     imageSource={require('../../assets/images/Apocalipse.png')} 
                     buttonText="Apocalipse" 
                     onPress={() => handleCardPress("Apocalipse")} 
-                    style={[styles.card, {top: -454, left: 87}]} // Estilo personalizado para este card
+                    style={[styles.card, {top: -454, left: 87}]}
                 />
-                {/* Adicione mais CardButtons conforme necessário */}
             </View>
         </View>
     );
 };
 
 // Componente IconButton
-
 const IconButton = ({
     iconName,
     iconSize = 30,
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#E6D853',
+        backgroundColor: '#6c3c0c',
     },
     header: {
         height: 80,

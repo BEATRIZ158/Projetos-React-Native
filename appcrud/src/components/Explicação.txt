@@ -13,3 +13,6 @@ da tela de Login.
 <view>: Contêiner principal que envolve todos os elementos.
 
 <Image>: Exibe a imagem de uma caminho relativo à pasta assets.
+
+Usuário: teste@gmail.com 
+Senha: 123456

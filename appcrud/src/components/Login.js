@@ -1,6 +1,6 @@
-import React, { useState } from 'react'; 
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native'; 
-import { Card, TextInput } from 'react-native-paper'; 
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { Card, TextInput } from 'react-native-paper';
 import firebase from '../services/connectionFirebase';
 
 export default function Login({changeStatus}) {
@@ -60,7 +60,7 @@ export default function Login({changeStatus}) {
         </Card>
         <TouchableOpacity 
         style={[styles.handleLogin, 
-          { backgroundColor: type === 'login' ? '#3ea6f2' : 'black' } ]}  
+          { backgroundColor: type === 'login' ? '#6c3c0c' : 'black' } ]}  
         onPress={handleLogin}
         >        
         <Text style={styles.loginText}>  
@@ -79,7 +79,7 @@ export default function Login({changeStatus}) {
 const styles = StyleSheet.create({ 
   card: { 
     borderRadius: 10, 
-    backgroundColor: "#8B008B", 
+    backgroundColor: "#6c3c0c", 
     alignItems: 'center', 
     height: 200,
     width: 350,
