@@ -4,40 +4,29 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';  // Ícones do FontAwesome
 import Icons from 'react-native-vector-icons/Fontisto';    // Ícones do Fontisto
+import Buy from './buyManager';
 import Home from './home';
 
 function HomeScreen() {
   return <Home />;
 }
 
-function SearchScreen() {
+function ListScreen() {
   return (
     <View style={styles.container}>
-      <Text>Search Screen</Text>
+      <Text>List Screen</Text>
     </View>
   );
 }
 
-function UserScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>User Screen</Text>
-    </View>
-  );
+function BuyScreen() {
+  return <Buy />;
 }
 
-function StoreScreen() {
+function NotificationsScreen() {
   return (
     <View style={styles.container}>
-      <Text>Store Screen</Text>
-    </View>
-  );
-}
-
-function ConfigScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Settings Screen</Text>
+      <Text>Notifications Screen</Text>
     </View>
   );
 }
@@ -57,24 +46,19 @@ export default function Menu() {
               case 'Home':
                 iconName = 'home';  // Ícone do FontAwesome
                 break;
-              case 'Explore':
-                iconName = 'search'; // Ícone do FontAwesome
+              case 'Listar':
+                iconName = 'list'; // Ícone do FontAwesome
                 break;
-              case 'User':
-                iconName = 'user';  // Ícone do FontAwesome
-                break;
-              case 'Store':
+              case 'Comprar':
                 iconName = 'shopping-cart';  // Ícone do FontAwesome
                 break;
-              case 'Settings':
-                iconName = 'player-settings'; // Ícone do Fontisto
-                IconComponent = Icons;        // Mudar para Fontisto
-                break;
+              case 'Ler API': 
+                iconName = 'bell';
+                break; 
               default:
-                iconName = 'add-circle-outline'; // Ícone padrão
+                iconName = 'add-circle-outline';
                 break;
             }
-
             // Usar IconComponent no retorno (FontAwesome ou Fontisto)
             return <IconComponent name={iconName} size={size} color={color} />;
           },
@@ -90,20 +74,16 @@ export default function Menu() {
           component={HomeScreen}
         />
         <Tab.Screen
-          name="Explore"
-          component={SearchScreen}
+          name="Listar"
+          component={ListScreen}
         />
         <Tab.Screen
-          name="User"
-          component={UserScreen}
+          name="Comprar"
+          component={BuyScreen}
         />
         <Tab.Screen
-          name="Store"
-          component={StoreScreen}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={ConfigScreen}
+          name="Ler API"
+          component={NotificationsScreen}
         />
       </Tab.Navigator>
     </NavigationContainer>

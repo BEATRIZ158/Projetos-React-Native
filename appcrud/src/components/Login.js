@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { Card, TextInput } from 'react-native-paper';
 import firebase from '../services/connectionFirebase';
 
+
 export default function Login({changeStatus}) {
   const [type, setType] = useState('login');
   const [email, setEmail] = useState('');
@@ -37,14 +38,14 @@ export default function Login({changeStatus}) {
   }
 
   return (
-    <View> 
+    <View style={styles.container}>
       <Image 
         source={require('../../assets/Pola Books.png')} 
         style={{ width: 390, height: 320 }} 
         />
-        <Text style={styles.text}>LOGIN</Text> 
+        <Text style={styles.text}>Login</Text> 
         <Card style={styles.card}> 
-          <TextInput style={styles.input} 
+          <TextInput style={[styles.input, styles.inputSpacing]} 
             label="E-mail" 
             right={<TextInput.Icon icon="email" />} 
             value={email}
@@ -60,7 +61,7 @@ export default function Login({changeStatus}) {
         </Card>
         <TouchableOpacity 
         style={[styles.handleLogin, 
-          { backgroundColor: type === 'login' ? '#6c3c0c' : 'black' } ]}  
+          {backgroundColor: type === 'login' ? '#DAA520' : '#000' } ]}  
         onPress={handleLogin}
         >        
         <Text style={styles.loginText}>  
@@ -77,32 +78,49 @@ export default function Login({changeStatus}) {
 }
 
 const styles = StyleSheet.create({ 
-  card: { 
-    borderRadius: 10, 
-    backgroundColor: "#6c3c0c", 
-    alignItems: 'center', 
-    height: 200,
+  container: {
+    flex: 1, // Para preencher toda a tela
+    backgroundColor: '#6c3c0c', // Aqui você define a cor de fundo
+    justifyContent: 'center', // Para centralizar verticalmente
+    padding: 5 // Ajuste o padding conforme necessário
+  },
+  card: {
+    backgroundColor: '#DAA520',
+    borderRadius: 10,
+    alignItems: 'center',
+    elevation: 0,
+    height: 160,
     width: 350,
-    marginLeft: 10
+    marginTop: 15,
+    marginLeft: 10,
+    marginBottom: 30
+  },
+  inputSpacing: {
+    marginBottom: 5, // Ajusta o espaço entre os elementos
   },
   handleLogin:{ 
-  alignItems: 'center', 
-  justifyContent:'center', 
-  height: 45,
-  marginTop:30,
+    backgroundColor: '#DAA520',
+    alignItems: 'center', 
+    justifyContent:'center',
+    width: 380, 
+    height: 45,
+    marginTop:30,
+  marginLeft: 0
   },
   loginText:{ 
     color: '#FFF', 
     fontSize: 24, 
   },
-  input:{ 
+  input:{
     width: 320, 
-    marginTop: 42 
+    marginTop: 20,
+    borderRadius: 5
   },
    text:{ 
+    color: '#DAA520',
     fontSize:30, 
     textAlign: 'center', 
     fontWeight: 'bold', 
     marginTop: 50 
-   } 
+   }
 });

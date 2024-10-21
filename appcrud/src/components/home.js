@@ -12,7 +12,7 @@ const Principal = () => {
     let iconName;
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={[styles.header, {backgroundColor: '#DAA520'}]}>
                 <IconButton iconName="list" iconSize={30} iconColor="#000" position={{ top: 3, left: -195}} 
                 />
                 <Text style={[styles.title, {top: 15, left: 55}]}>Eternal Grace</Text>
@@ -75,7 +75,7 @@ const IconButton = ({
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: '#FFFFFF' }]}>
+        <View style={[styles.container, { backgroundColor: '#DAA520' }]}>
             <TouchableOpacity onPress={handlePress} style={[styles.iconButton, position]}>
                 <Icon name={iconName} size={iconSize} color={iconColor} />
             </TouchableOpacity>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     header: {
         height: 80,
         width: 400,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#DAA520',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         height: 30,
         padding: 20,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#DAA520',
     },
 });
 
