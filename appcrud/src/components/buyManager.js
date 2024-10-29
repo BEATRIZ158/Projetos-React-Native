@@ -11,7 +11,7 @@ const Separator = () => {
   return <View style={styles.separator} />; 
 }
 
-export default function buyManager() { 
+export default function buyManager() {
   const [date, setDate] = useState(''); 
   const [product, setProduct] = useState(''); 
   const [brand, setBrand] = useState(''); 
@@ -93,7 +93,8 @@ export default function buyManager() {
     }
 
   return (
-    <View style={styles.container}> 
+  <View style={[styles.container, {margin:0}]}>
+  	<View style={styles.container}> 
         <TextInput 
             placeholder='Data da Compra' 
             left={<TextInput.Icon icon="calendar" />} 
@@ -127,14 +128,14 @@ export default function buyManager() {
         />
         <Separator /> 
         <TouchableOpacity onPress={insertUpdate} 
-            style={styles.button} 
+            style={[styles.button, {marginLeft: 40}]}
             activeOpacity={0.5}> 
             <Text style={styles.buttonTextStyle}> 
-                Cadastrar 
-            </Text> 
+                Cadastrar
+            </Text>
         </TouchableOpacity> 
         <View> 
-            <Text style={styles.listar}>Histórico de Compras</Text> 
+            <Text style={[styles.listar, {color: '#FFFFFF'}]}>Histórico de Compras</Text> 
         </View>
 
         {loading ? (
@@ -149,14 +150,16 @@ export default function buyManager() {
           />
         )}
     </View> 
+  </View> 
   ); 
 } 
 
 const styles = StyleSheet.create({ 
     container: { 
-        flex: 1, 
-        margin: 10, 
-    }, 
+        flex: 1,
+        margin: 10,
+        backgroundColor: '#6c3c0c'
+    },
     input: { 
         borderWidth: 1, 
         borderColor: '#121212', 
@@ -170,13 +173,14 @@ const styles = StyleSheet.create({
     button: { 
         flexDirection: 'row', 
         alignItems: 'center', 
-        backgroundColor: '#3ea6f2', 
+        backgroundColor: '#DAA520', 
         borderWidth: 0.5, 
         borderColor: '#fff', 
         height: 40, 
         borderRadius: 5, 
-        margin: 5, 
-    }, 
+        margin: 5,
+        width: 300
+    },
     buttonImageIconStyle: { 
         padding: 10, 
         margin: 5, 
@@ -185,10 +189,10 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch', 
     }, 
     buttonTextStyle: { 
-        color: '#fff', 
+        color: '#fff',
         marginBottom: 4, 
         marginLeft: 100, 
-        fontSize: 20 
+        fontSize: 20
     }, 
     buttonIconSeparatorStyle: { 
         backgroundColor: '#fff', 
