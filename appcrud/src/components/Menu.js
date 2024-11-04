@@ -5,17 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';  // Ícones do FontAwesome
 import Buy from './buyManager';
 import Home from './home';
+import Book from './bookListScreen';
 
 function HomeScreen() {
   return <Home />;
 }
 
 function ListScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>List Screen</Text>
-    </View>
-  );
+  return <Book/>;
 }
 
 function BuyScreen() {

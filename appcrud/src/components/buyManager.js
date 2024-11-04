@@ -134,7 +134,7 @@ export default function buyManager() {
                 Cadastrar
             </Text>
         </TouchableOpacity> 
-        <View> 
+        <View>
             <Text style={[styles.listar, {color: '#FFFFFF'}]}>Histórico de Compras</Text> 
         </View>
 
