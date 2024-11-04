@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
     View, Text, StyleSheet, 
     TouchableOpacity, Keyboard, FlatList, ActivityIndicator 
-} from 'react-native'; 
+} from 'react-native';
 import { TextInput } from 'react-native-paper'; 
 import ListBuys from './list_buys';
 import firebase from '../services/connectionFirebase';
@@ -19,78 +19,98 @@ export default function buyManager() {
   const [key, setKey] = useState(''); 
   const [buys, setBuys] = useState([]);
   const [loading, setLoading] = useState(true);
+  //useRef utilizado para carregar os dados da lista para alterar
+  const inputRef = useRef(null);
 
   //métodos do arquivo insert/ipdate/search/edit/delete
   useEffect(() => {
-      //método para selecionar todas as compras cadastradas
-      async function search() {
-    
-        await firebase.database().ref('Buys').on('value', 
-        (snapshot) => {
-          setBuys([]);
-          snapshot.forEach((chilItem) => {
-            let data = {
-              //de acordo com a chave de cada item busca os valores
-              //cadastrados na relação e atribui nos dados
-              key: chilItem.key,
-              date: chilItem.val().date,
-              product: chilItem.val().product,
-              brand: chilItem.val().brand,
-              price: chilItem.val().price,           
-            };
-            setBuys(oldArray => [...oldArray, data].reverse());
-          })
-          setLoading(false);
+    //método para selecionar todas as compras cadastradas
+    async function search() {
+  
+      await firebase.database().ref('Buys').on('value', 
+      (snapshot) => {
+        setBuys([]);
+        snapshot.forEach((chilItem) => {
+          let data = {
+            //de acordo com a chave de cada item busca os valores
+            //cadastrados na relação e atribui nos dados
+            key: chilItem.key,
+            date: chilItem.val().date,
+            product: chilItem.val().product,
+            brand: chilItem.val().brand,
+            price: chilItem.val().price,           
+          };
+          setBuys(oldArray => [...oldArray, data].reverse());
         })
-      }
-      search();
-    }, []);
-    
-    //método para inserir ou alterar os dados produtos
-    //async -> assíncrono executa um método e espera
-    //o processamento dele retornando uma mensagem
-    async function insertUpdate() {
-      //editar dados
-      if (
-        (date !== "") &
-        (product !== "") &
-        (brand !== "") &
-        (price !== "") &
-        (key !== "")
-      ) {
-        firebase.database().ref("Buys").child(key).update({
-          date: date,
-          product: product,
-          brand: brand,
-          price: price,
-        });
-        //para o teclado do celular fixo abaixo do formulário (não flutuante)
-        Keyboard.dismiss();
-        alert("Data Alterada!");
-        clearData();
-        setKey("");
-        return;
-      }
-      //cadastrar dados - insert
-      let buy = await firebase.database().ref("Buys");
-      let keyprod = buy.push().key; //cadastar os dados
-    
-      buy.child(keyprod).set({
+        setLoading(false);
+      })
+    }
+    search();
+  }, []);
+  
+  //método para inserir ou alterar os dados produtos
+  //async -> assíncrono executa um método e espera
+  //o processamento dele retornando uma mensagem
+  async function insertUpdate() {
+    //editar dados
+    if (
+      (date !== "") &
+      (product !== "") &
+      (brand !== "") &
+      (price !== "") &
+      (key !== "")
+    ) {
+      firebase.database().ref("Buys").child(key).update({
         date: date,
         product: product,
         brand: brand,
         price: price,
       });
-      alert("Compra Realizada!");
+      //para o teclado do celular fixo abaixo do formulário (não flutuante)
+      Keyboard.dismiss();
+      alert("Data Alterada!");
       clearData();
+      setKey("");
+      return;
     }
-    
-    function clearData() {
-      setDate("");
-      setProduct("");
-      setBrand("");
-      setPrice("");
-    }
+    //cadastrar dados - insert
+    let buy = await firebase.database().ref("Buys");
+    let keyprod = buy.push().key; //cadastar os dados
+  
+    buy.child(keyprod).set({
+      date: date,
+      product: product,
+      brand: brand,
+      price: price,
+    });
+    alert("Compra Realizada!");
+    clearData();
+  }
+  
+  function clearData() {
+    setDate("");
+    setProduct("");
+    setBrand("");
+    setPrice("");
+  }
+
+  function handleEdit(data){
+    setKey(data.key);
+    setDate(data.date);
+    setProduct(data.product);
+    setBrand(data.brand);
+    setPrice(data.price);
+  }
+
+  function handleDelete(key){
+    firebase.database().ref('Buys').child(key).remove()
+    .then(() =>{
+        //todos os itens que forem diferentes daquele que foi deletado
+        //serão atribuidos no array
+        const findBuys = buys.filter(item => item.key !== key);
+        setBuys(findBuys)
+    })
+  }
 
   return (
   <View style={[styles.container, {margin:0}]}>
@@ -101,6 +121,7 @@ export default function buyManager() {
             style={styles.input} 
             onChangeText={(texto) => setDate(texto)} 
             value={date}
+            ref={inputRef}
         />
         <Separator />
         <TextInput
@@ -109,6 +130,7 @@ export default function buyManager() {
             style={styles.input} 
             onChangeText={(texto) => setProduct(texto)} 
             value={product}
+            ref={inputRef}
         /> 
         <Separator />
         <TextInput
@@ -117,6 +139,7 @@ export default function buyManager() {
             style={styles.input} 
             onChangeText={(texto) => setBrand(texto)} 
             value={brand}
+            ref={inputRef}
         /> 
         <Separator /> 
         <TextInput 
@@ -124,14 +147,15 @@ export default function buyManager() {
             left={<TextInput.Icon icon="cash" />} 
             style={styles.input} 
             onChangeText={(texto) => setPrice(texto)} 
-            value={price} 
+            value={price}
+            ref={inputRef}
         />
         <Separator /> 
         <TouchableOpacity onPress={insertUpdate} 
             style={[styles.button, {marginLeft: 40}]}
             activeOpacity={0.5}> 
             <Text style={styles.buttonTextStyle}> 
-                Cadastrar
+                Salvar
             </Text>
         </TouchableOpacity> 
         <View>
@@ -145,14 +169,14 @@ export default function buyManager() {
             keyExtractor={(item) => item.key}
             data={buys}
             renderItem={({ item }) => (
-              <ListBuys data={item} deleteItem={''} editItem={''} />
+              <ListBuys data={item} deleteItem={handleDelete} editItem={handleEdit} />
             )}
           />
         )}
     </View> 
-  </View> 
+  </View>
   ); 
-} 
+}
 
 const styles = StyleSheet.create({ 
     container: { 

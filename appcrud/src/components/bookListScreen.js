@@ -49,8 +49,7 @@ const BookListScreen = () => {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={[styles.bookItem, {paddingTop: 10}]}>
-                        {/*<Text style={styles.title}>{item.title}</Text>*/}
-                        <Text>Titúlo: {item.tittle}</Text>
+                        <Text style={styles.title}>Titúlo: {item.tittle}</Text>
                         <Text>Autor: {item.author}</Text>
                         <Text>Gênero: {item.gender}</Text>
                         <Text>Preço: {item.price}</Text>
@@ -86,8 +85,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 16,
-        marginBottom: 5,
+        fontSize: 15,
+        marginBottom: 4,
     },
 });
 
