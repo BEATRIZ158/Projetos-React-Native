@@ -14,7 +14,7 @@ const BookListScreen = () => {
             const data = snapshot.val();
             const bookArray = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
             setBooks(bookArray);
-            setFilteredBooks(bookArray);  // Inicialmente, sem filtro
+            setFilteredBooks(bookArray);
         };
         fetchBooks();
     }, []);
@@ -23,7 +23,7 @@ const BookListScreen = () => {
     const handleSearch = () => {
         if (searchValue) {
             const filtered = books.filter(book =>
-                (book.title || '').toLowerCase().includes(searchValue.toLowerCase())
+                (book.tittle || '').toLowerCase().includes(searchValue.toLowerCase())
             );
             setFilteredBooks(filtered);
         } else {
@@ -33,7 +33,6 @@ const BookListScreen = () => {
 
     return (
         <View style={styles.container}>
-            {/* Input e botão de busca */}
             <TextInput
                 style={styles.input}
                 placeholder="Buscar por título"
@@ -42,7 +41,6 @@ const BookListScreen = () => {
             />
             <Button title="Buscar" onPress={handleSearch} />
         
-            {/* Lista de livros */}
             <View style={[{paddingTop: 15}]}>
             <FlatList
                 data={filteredBooks}

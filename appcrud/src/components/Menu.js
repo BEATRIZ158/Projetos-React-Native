@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';  // Ícones do FontAwe
 import Buy from './buyManager';
 import Home from './home';
 import Book from './bookListScreen';
+import Register from './RegisterBook';
 
 function HomeScreen() {
   return <Home />;
@@ -17,6 +18,10 @@ function ListScreen() {
 
 function BuyScreen() {
   return <Buy />;
+}
+
+function BookScreen() {
+  return <Register />;
 }
 
 function NotificationsScreen() {
@@ -48,6 +53,9 @@ export default function Menu() {
               case 'Comprar':
                 iconName = 'shopping-cart';  // Ícone do FontAwesome
                 break;
+              case 'Livro':
+                  iconName = 'book';  // Ícone do FontAwesome
+                  break;
               case 'Ler API': 
                 iconName = 'bell';
                 break; 
@@ -76,6 +84,10 @@ export default function Menu() {
         <Tab.Screen
           name="Comprar"
           component={BuyScreen}
+        />
+         <Tab.Screen
+          name="Livro"
+          component={BookScreen}
         />
         <Tab.Screen
           name="Ler API"

@@ -3,7 +3,8 @@ import {
     View, Text, StyleSheet, 
     TouchableOpacity, Keyboard, FlatList, ActivityIndicator 
 } from 'react-native';
-import { TextInput } from 'react-native-paper'; 
+import { TextInput } from 'react-native-paper';
+import { Dialog, Portal, Button, Provider } from 'react-native-paper';
 import ListBuys from './list_buys';
 import firebase from '../services/connectionFirebase';
 
@@ -19,6 +20,8 @@ export default function buyManager() {
   const [key, setKey] = useState(''); 
   const [buys, setBuys] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false); // Estado para controle do diálogo
+  const [selectedKey, setSelectedKey] = useState(null); // Estado para guardar o item a ser deletado
   //useRef utilizado para carregar os dados da lista para alterar
   const inputRef = useRef(null);
 
@@ -26,7 +29,6 @@ export default function buyManager() {
   useEffect(() => {
     //método para selecionar todas as compras cadastradas
     async function search() {
-  
       await firebase.database().ref('Buys').on('value', 
       (snapshot) => {
         setBuys([]);
@@ -102,129 +104,153 @@ export default function buyManager() {
     setPrice(data.price);
   }
 
-  function handleDelete(key){
-    firebase.database().ref('Buys').child(key).remove()
-    .then(() =>{
-        //todos os itens que forem diferentes daquele que foi deletado
-        //serão atribuidos no array
-        const findBuys = buys.filter(item => item.key !== key);
-        setBuys(findBuys)
-    })
+  function confirmDelete(key){
+    setSelectedKey(key);
+    setVisible(true); // Exibe o diálogo de confirmação
+  }
+
+  function handleDelete() {
+    if (selectedKey) {
+      firebase.database().ref('Buys').child(selectedKey).remove()
+      .then(() =>{
+        const findBuys = buys.filter(item => item.key !== selectedKey);
+        setBuys(findBuys);
+        setVisible(false);
+      });
+    }
   }
 
   return (
+  <Provider>
   <View style={[styles.container, {margin:0}]}>
   	<View style={styles.container}> 
-        <TextInput 
-            placeholder='Data da Compra' 
-            left={<TextInput.Icon icon="calendar" />} 
-            style={styles.input} 
-            onChangeText={(texto) => setDate(texto)} 
-            value={date}
-            ref={inputRef}
-        />
-        <Separator />
-        <TextInput
-            placeholder='Produto' 
-            left={<TextInput.Icon icon="book-open-variant" />}
-            style={styles.input} 
-            onChangeText={(texto) => setProduct(texto)} 
-            value={product}
-            ref={inputRef}
-        /> 
-        <Separator />
-        <TextInput
-            placeholder='Marca' 
-            left={<TextInput.Icon icon="book-alphabet" />} 
-            style={styles.input} 
-            onChangeText={(texto) => setBrand(texto)} 
-            value={brand}
-            ref={inputRef}
-        /> 
-        <Separator /> 
-        <TextInput 
-            placeholder='Preço (R$)' 
-            left={<TextInput.Icon icon="cash" />} 
-            style={styles.input} 
-            onChangeText={(texto) => setPrice(texto)} 
-            value={price}
-            ref={inputRef}
-        />
-        <Separator /> 
-        <TouchableOpacity onPress={insertUpdate} 
-            style={[styles.button, {marginLeft: 40}]}
-            activeOpacity={0.5}> 
-            <Text style={styles.buttonTextStyle}> 
-                Salvar
-            </Text>
-        </TouchableOpacity> 
-        <View>
-            <Text style={[styles.listar, {color: '#FFFFFF'}]}>Histórico de Compras</Text> 
-        </View>
+      <TextInput 
+        placeholder='Data da Compra' 
+        left={<TextInput.Icon icon="calendar" />} 
+        style={styles.input} 
+        onChangeText={(texto) => setDate(texto)} 
+        value={date}
+        ref={inputRef}
+      />
+      <Separator />
+      <TextInput
+        placeholder='Produto'
+        left={<TextInput.Icon icon="book-open-variant" />}
+        style={styles.input} 
+        onChangeText={(texto) => setProduct(texto)} 
+        value={product}
+        ref={inputRef}
+      /> 
+      <Separator />
+      <TextInput
+        placeholder='Marca' 
+        left={<TextInput.Icon icon="book-alphabet" />} 
+        style={styles.input} 
+        onChangeText={(texto) => setBrand(texto)} 
+        value={brand}
+        ref={inputRef}
+      /> 
+      <Separator /> 
+      <TextInput 
+        placeholder='Preço (R$)' 
+        left={<TextInput.Icon icon="cash" />} 
+        style={styles.input} 
+        onChangeText={(texto) => setPrice(texto)} 
+        value={price}
+        ref={inputRef}
+      />
+      <Separator /> 
+      <TouchableOpacity onPress={insertUpdate} 
+        style={[styles.button, {marginLeft: 40}]}
+        activeOpacity={0.5}> 
+        <Text style={styles.buttonTextStyle}> 
+            Salvar
+        </Text>
+      </TouchableOpacity> 
+      <View>
+        <Text style={[styles.listar, {color: '#FFFFFF'}]}>Histórico de Compras</Text> 
+      </View>
 
-        {loading ? (
-          <ActivityIndicator color="#121212" size={45} />
-        ) : (
-          <FlatList
-            keyExtractor={(item) => item.key}
-            data={buys}
-            renderItem={({ item }) => (
-              <ListBuys data={item} deleteItem={handleDelete} editItem={handleEdit} />
-            )}
-          />
-        )}
-    </View> 
+      {loading ? (
+        <ActivityIndicator color="#121212" size={45} />
+      ) : (
+        <FlatList
+          keyExtractor={(item) => item.key}
+          data={buys}
+          renderItem={({ item }) => (
+          <ListBuys 
+            data={item} 
+            deleteItem={() => confirmDelete(item.key)} 
+            editItem={handleEdit} />
+          )}
+        />
+      )}
+    </View>  
+
+    <Portal>
+      <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+        <Dialog.Title>Confirmação de Exclusão</Dialog.Title>
+        <Dialog.Content>
+          <Text>Tem certeza que deseja excluir esta Compra?</Text>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={() => setVisible(false)}>Cancelar</Button>
+          <Button onPress={handleDelete}>Excluir</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   </View>
+  </Provider>
   ); 
 }
 
 const styles = StyleSheet.create({ 
     container: { 
-        flex: 1,
-        margin: 10,
-        backgroundColor: '#6c3c0c'
+      flex: 1,
+      margin: 10,
+      backgroundColor: '#6c3c0c'
     },
     input: { 
-        borderWidth: 1, 
-        borderColor: '#121212', 
-        height: 40, 
-        fontSize: 13, 
-        borderRadius: 8 
+      borderWidth: 1, 
+      borderColor: '#121212', 
+      height: 40, 
+      fontSize: 13, 
+      borderRadius: 8 
     }, 
     separator: { 
-        marginVertical: 5, 
+      marginVertical: 5, 
     }, 
     button: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        backgroundColor: '#DAA520', 
-        borderWidth: 0.5, 
-        borderColor: '#fff', 
-        height: 40, 
-        borderRadius: 5, 
-        margin: 5,
-        width: 300
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      backgroundColor: '#DAA520', 
+      borderWidth: 0.5, 
+      borderColor: '#fff', 
+      height: 40, 
+      borderRadius: 5, 
+      margin: 5,
+      width: 300
     },
     buttonImageIconStyle: { 
-        padding: 10, 
-        margin: 5, 
-        height: 25, 
-        width: 25, 
-        resizeMode: 'stretch', 
+      padding: 10, 
+      margin: 5, 
+      height: 25, 
+      width: 25, 
+      resizeMode: 'stretch', 
     }, 
     buttonTextStyle: { 
-        color: '#fff',
-        marginBottom: 4, 
-        marginLeft: 100, 
-        fontSize: 20
+      color: '#fff',
+      marginBottom: 4, 
+      marginLeft: 100, 
+      fontSize: 20
     }, 
     buttonIconSeparatorStyle: { 
-        backgroundColor: '#fff', 
-        width: 1, 
-        height: 20, 
+      backgroundColor: '#fff', 
+      width: 1, 
+      height: 20, 
     }, 
     listar: { 
-        fontSize: 20, 
-        textAlign: 'center' 
+      fontSize: 20, 
+      textAlign: 'center' 
     } 
 });
