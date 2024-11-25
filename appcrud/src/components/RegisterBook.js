@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'; 
 import { 
-    View, Text, StyleSheet, 
-    TouchableOpacity, Keyboard, FlatList, ActivityIndicator 
+  View, Text, StyleSheet, 
+  TouchableOpacity, Keyboard, FlatList, ActivityIndicator 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TextInput, Dialog, Portal, Button, Provider } from 'react-native-paper'; 

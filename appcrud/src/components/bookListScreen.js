@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#6c3c0c',
     },
     input: {
         height: 40,
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
+        backgroundColor: '#FFFFFF'
     },
     bookItem: {
         padding: 15,
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 5,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#E1C06B',
         height: 120
     },
     title: {
